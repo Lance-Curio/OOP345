@@ -1,4 +1,10 @@
-
+// Name: LANCE CURIO	
+// Seneca Student ID: 104319223
+// Seneca email: lcurio@myseneca.ca
+// Date of completion: 11-11-2023
+//
+// I confirm that I am the only author of this file
+//   and the content was created entirely by me.
 #include "Utilities.h"
 #include "Station.h"
 #include <iomanip>
@@ -15,24 +21,22 @@ namespace sdds {
 		size_t next_pos = 0;
 		bool more = true;
 		m_id = ++id_generator;
-
 		try {
 			m_name = util.extractToken(str, next_pos, more);
 			m_serialNumber = stoi(util.extractToken(str, next_pos, more));
 			m_stock = stoi(util.extractToken(str, next_pos, more));
-			m_desc = util.extractToken(str, next_pos, more);
-
-			if (util.getFieldWidth() < m_widthField) {
+			if (util.getFieldWidth() > m_widthField) {
 				m_widthField = util.getFieldWidth();
 			}
+			m_desc = util.extractToken(str, next_pos, more);
 		}
-		catch (string err){
-			;
+		catch (const char*) {
+			cerr << "ERROR";
 		}
 	}
 
-	void Station::updateQuantity(){
-		if (m_stock > 0){
+	void Station::updateQuantity() {
+		if (m_stock > 0) {
 			m_stock--;
 		}
 	}
@@ -42,7 +46,7 @@ namespace sdds {
 	}
 
 	size_t Station::getNextSerialNumber() {
-		return m_serialNumber;
+		return m_serialNumber++;
 	}
 
 	size_t Station::getQuantity() const {
@@ -52,12 +56,12 @@ namespace sdds {
 	void Station::display(std::ostream& os, bool full) const {
 		os << right << setw(3) << setfill('0') << m_id << " | "
 			<< left << setw(m_widthField) << setfill(' ') << m_name
-			<< "| " << right << setw(6) << setfill('0') << m_serialNumber << " | ";
+			<< " | " << right << setw(6) << setfill('0') << m_serialNumber << " | ";
 
 		if (full) {
 			os << right << setw(4) << setfill(' ') << m_stock << " | " << left << m_desc;
 		}
 
 		os << endl;
- 	}
+	}
 }
