@@ -1,0 +1,17 @@
+Defining class objects outside the class definition is necessary because of template classes like Collection and OrderedCollection. Unlike regular classes, template classes are not fully compiled until they are instantiated with specific template arguments (types). For instance, in the Collection class, the member m_smallestItem is defined and specialized as:
+template <typename T, unsigned C>
+T Collection<T, C>::m_smallestItem = 9999;
+
+This specialization sets an initial value for m_smallestItem based on the data type T, ensuring that it doesn't default to 0. Without this specialization, m_smallestItem could have an incorrect initial value. This is particularly important when working with types like Book, where meaningful initial values are necessary for proper comparisons. For instance, in the Book specialization, providing initial values based on the characteristics of a book, such as the number of pages and chapters:
+template <>
+Book Collection<Book, 10>::m_smallestItem("", 1, 1000);
+template <>
+Book Collection<Book, 10>::m_largestItem("", 10000, 1);
+
+
+I added the additional members to the Book class because I needed to make it compatible with the Collection and OrderedCollection modules. These modules required certain functionalities, such as comparing Book objects based on their pages-to-chapters ratios, checking the validity of Book objects, copying objects, and accessing the smallest and largest items within a collection.
+
+These functions cannot be queries because they involve more than just returning a value. They perform complex calculations or comparisons, like sorting books by their pages-to-chapters ratio or finding the smallest and largest items in a collection, which go beyond the typical behavior of a query that retrieves data without altering the object's state.
+
+These functions cannot be queries because they involve complex logic and operations that returns a value of a member variable. For example, the operator< and operator> functions in the Book class are responsible for comparing two Book objects based on their pages-to-chapters ratios, which needs mathematical calculations and conditional checks. Similarly, the getSmallestItem() and getLargestItem() functions in the Collection and OrderedCollection classes involve logic to determine the smallest and largest items within a collection. 
+

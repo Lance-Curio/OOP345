@@ -1,0 +1,19 @@
+In the code, I've constructed instances of resources, such files and directories, that are derived from the main Resource class by using dynamic memory allocation (using new). To prevent memory leaks, it is essential to deallocate this dynamically allocated memory. When memory used during runtime is not explicitly released before the application ends, memory leaks happen. This indicates that in order to maintain the program's memory efficiency, we must correctly release the memory that is used to hold our resources in our code.
+
+For instance, the destructor in our Filesystem class dealslocates the memory for the m_root:
+Filesystem::~Filesystem() {
+    delete m_root;
+}
+------------------------------------------------------------------------------------------------------------------------------------------
+A set of resources is kept in the code as references to the Resource base class. We may manage several resource kinds in a single container with this design, such as files and directories. However, I use dynamic casting in order to access functions that are unique to directory objects. By using dynamic casting, we can determine whether a pointer leads to a directory and, if it does, carry out actions particular to directory objects.
+
+This is an illustration from our code:
+Directory* dir = dynamic_cast<Directory*>(resource);
+if (dir) {
+    // Perform Directory-specific operations on dir
+}
+We may safely downcast the pointer to the derived class via dynamic casting, ensuring that we access the appropriate functionality when the pointer does, in fact, point to a Directory.
+------------------------------------------------------------------------------------------------------------------------------------------
+In this workshop, we decided to store our filesystem resource collection in std::vector<sdds::Resource*>. We have various derived classes of resources, such as Directory and File, each with unique features and behaviors, which prompted this decision. We were able to interact with objects of different derived types while maintaining their unique behavior by storing them as pointers in a vector.
+
+We wouldn't have been able to store anything other than base class objects if we had used std::vector<sdds::Resource; we would have also lost the behavior and information unique to derived classes. Representing a file system structure where directories and files have different properties and functions would not have been a good fit for this method.

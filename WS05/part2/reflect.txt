@@ -1,0 +1,17 @@
+// Lance Curio
+// 104319223
+// lcurio@myseneca.ca
+// 2023-10-22
+
+
+A functor is a function object that can be called as if it were a function. Functors are typically implemented as classes or structs with overloaded operator().Lambda expressions are anonymous functions that can be defined inline. Functors are particularly well-suited for complex operations that involve multiple steps or calculations and require the maintenance of internal state between these steps.
+Lambda expressions are more appropriate for simple, one-off operations, especially when they are used locally and not reused elsewhere in the code.
+
+The constructor for SpellChecker generates an exception when it cannot open a file. To achieve the same result without exceptions, you can use error codes or error flags. Instead of throwing an exception, you can return an error code (negative integer) when the file cannot be opened. The client code can check the return value and handle the error accordingly. On the client side, you can use conditional statements to handle the error code and provide appropriate error messages.
+
+The Movie and Book classes contain almost identical logic for loading data from a file. To avoid code duplication, you can create a common base class that contains the shared logic for loading data from a file. Both Movie and Book can then inherit from this base class.
+Alternatively, you can use composition over inheritance by creating a separate class responsible for loading data from a file and then aggregating instances of this class within Movie and Book.
+
+The default constructor in the Movie and Book classes is not necessary if the custom constructor can fully initialize the objects.
+In this case, the custom constructor should be able to handle all initialization, and there is no need for a separate default constructor.
+Removing the default constructor can also help ensure that objects of these classes are always properly initialized, reducing the risk of using uninitialized objects.

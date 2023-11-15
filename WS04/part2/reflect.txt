@@ -1,0 +1,25 @@
+// LANCE CURIO
+// 104319223
+// lcurio@myseneca.ca
+// October 10, 2023
+
+The const Cheese** m_cheese member of the CheeseShop class shows a composition relationship with the Cheese class. This is demonstrated by the fact that CheeseShop fully assumes responsibility for the memory allocation and deallocation of const Cheese instances in methods like addCheese and the destructor, in addition to holding pointers to these objects. The CheeseParty class, in contrast, displays an aggregation relationship with Cheese objects through its member const Cheese** m_cheese, where it merely holds references to the objects without controlling their lifecycle, allowing Cheese objects to exist independently and persist outside of the CheeseParty.
+
+The CheeseShop (composition) and CheeseParty (aggregation) classes in the provided code serve as examples of how move and copy functions are implemented in composition and aggregation relationships. These classes differ in how they handle ownership and copying of contained objects. In aggregation, these functions maintain references or pointers to the same underlying objects as the source, preventing duplication, whereas in composition, both copy and move functions typically perform deep copying or resource transfer, ensuring the new object has independent copies of the contained objects. The move constructor of CheeseShop moves resource ownership while the copy constructor accurately deep-copies the Cheese objects. However, reflecting the differences between composition and aggregation relationships, CheeseParty's copy constructor preserves references to the same Cheese objects, and its move constructor transfers ownership of these references without duplicating the actual Cheese objects.
+
+Because of the way that their composition and aggregation connections are structured, the addCheese functions in the CheeseShop and CheeseParty classes are implemented differently. To ensure separate object management within the shop, the function in the CheeseShop (composition) class generates a new duplicate of the Cheese object that was supplied as an argument, allocates new memory for it, and assumes complete ownership. In contrast, the function in the CheeseParty (aggregation) class adds a reference (pointer) to the already-existing Cheese object, preventing duplication and giving up ownership and allowing the objects to exist independently outside of the party, reflecting the differences between composition and aggregation relationships.
+
+To develop a private member function that removes a particular Cheese object from the shop's internal array of const Cheese* pointers based on a distinctive identifier like the cheese's name in order to implement a removeCheese function in the CheeseShop class while preserving its handling of cheeses. The private removal function can then be called after the public removeCheese method has located the cheese to be removed. Update the destructor to manage the deallocation of any dynamically allocated memory for deleted Cheese instances and to gracefully handle incorrect situations to complete the implementation. This update gives CheeseShop the ability to keep control over the lifespan of its cheeses and offers a mechanism to get rid of particular goods from its stock. For removeCheese:
+void CheeseShop::removeCheese(const Cheese& cheese) {
+    // Find the index of the Cheese object to remove
+    for (size_t i = 0; i < m_size; i++) {
+        if (m_cheese[i]->getName() == cheese.getName()) {
+            // Remove the Cheese object at the specified index
+            // by shifting elements and reducing the size of the array.
+            // This may involve memory management (deletion) as well.
+            // Then return to exit the function.
+            // This handles both locating and removing the cheese.
+            // If the cheese was not found, you can handle it accordingly.
+        }
+    }
+    // Handle the case where the cheese was not found.
