@@ -1,0 +1,22 @@
+// Lance Curio
+// 104319223
+// lcurio@myseneca.ca
+// November 12, 2023
+During the workshop I utilized STL functions in the implementation of a CovidCollection class to perform precise caluclations and iterate through the vector without using manual loops. In this workshop the list of STL function I used are:
+	accumulate: Used for summing up values in the CovidCollection, providing a concise and readable way to calculate totals.
+	for_each: Applied for displaying Covid data and applying updates to each element in the collection, simplifying iteration without 	          manual loops.
+	copy_if: Employed to create a new list containing elements that meet a specified condition, enhancing readability and  	 		         maintainability.
+	sort: Utilized for sorting the collection based on a specified field, offering a standardized and readable solution.
+	transform: Used to update the status of each city in the collection, providing an efficient way to modify elements in place.
+
+
+STL algorithms provide concise, straightforward solutions to common tasks, which improves the understanding and maintenance of code. They provid a focus on the main ideas instead of getting stuck in detailed steps like looping and checking conditions. This simplification helps easier coding. These algorithms also provide itself to easy reuse in other sections of the code, which minimizes repetition and increases program efficiency. Essentially, STL algorithms allow the creation of structured and flexible code while maintaining simplicity and reusability.
+
+
+We can represent valid fields with enum types or constants to prevent clients from specifying incorrect fields. For example:
+
+enum class SortField { COUNTRY, CITY, VARIANT, YEAR, CASES, DEATHS };
+
+void sort(SortField field);
+
+Clients can specify the sorting field using these set options by using an enum or constants to represent suitable fields. The compiler minimizes the possibility of runtime errors by quickly highlighting and recognizing attempts to use incorrect or misspelled fields. With this method, appropriate sorting fields can be specified in an organized and error-resistant way, improving code safety, readability, and maintainability.
