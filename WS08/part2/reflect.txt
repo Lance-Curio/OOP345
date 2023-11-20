@@ -1,0 +1,21 @@
+// Lance Curio
+// 104319223
+// lcurio@myseneca.ca
+// November 19, 2023
+
+
+The excludeRaw and excludeSmart functions clearly demonstrate the difference between raw and smart pointer syntax. Smart pointers manage memory automatically, improving code readability and lowering the risk of memory-related errors, in contrast to raw pointers, which must be directly allocated and deallocated.
+------------------------------------------------------------------------------------------------------------------------------------------
+The way dynamic memory is managed shows the difference between smart pointer syntax and raw pointer syntax. The excludeRaw function manually allocates raw pointers using the new keyword, which requires manual memory management by deallocation using delete. Memory leaks could occur from this method if deallocation is not done properly. However, smart pointers more particular, std::unique_ptr are used in the excludeSmart function. Code safety and readability are improved by smart pointers, which manage memory allocation and deallocation automatically. The likelihood of memory related mistakes is decreased and overall code maintainability is improved by the usage of smart pointers, which removes the requirement for direct memory cleanup.
+------------------------------------------------------------------------------------------------------------------------------------------
+Because of the unnecessary creation and deletion of objects throughout the excludeRaw function's loop, there is an excessive amount of object duplication in the output. Every iteration involves the dynamic allocation, validation, addition, and instant deletion of a new profile object from the result database. However, the profile objects are duplicated unnecessarily throughout this procedure, which results in the pattern of duplications. In order to minimize the number of unnecessary copies in the application, a more efficient approach involves incorporating move semantics. Instead of copying profiles, the application can leverage std::move when adding profiles to the result, facilitating the transfer of ownership rather than creating redundant copies. 
+if (!banned) {
+    unique_ptr<Profile> profile = make_unique<Profile>(allProfiles[i]);
+    profile->validateAddress();
+    result += move(profile);
+}
+------------------------------------------------------------------------------------------------------------------------------------------
+When objects are added to DataBase's collection attribute using std::move(), ownership of those objects is transferred, leaving the original objects in a valid but undefined state. In this case, the compiler generated move constructor will be used because the Profile class does not have an explicit move constructor. The code snippet for the operator+= that is provided makes appropriate use of std::move(item) to carry out the ownership transfer, enabling the object to be added to the collection. The move semantics implementation upholds the validity of the original objects while facilitating effective resource transfer, even in the absence of an explicitly defined move constructor in the Profile class.
+void operator+=(T&& address) {
+    database.push_back(std::move(address));
+}
